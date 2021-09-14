@@ -199,11 +199,4 @@ def chatWithBot(inputText):
         return "Take it easy on me😓, i am still learning.\n\nMosty ask questions related to the interface and i will give you an appropriate answer. Thanks😍"
        
     
-def chat():
-    print("start talking with the bot")
-    while True:
-        inp = input ("you: ")
-        if inp.lower() == "quit":
-            break
 
-        print(chatWithBot(inp))
