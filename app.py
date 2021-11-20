@@ -443,7 +443,7 @@ def reply_whatsapp():
 
         length = len(a)
 
-        middle_index = length // 2
+        middle_index = length / 2
 
         first_half = list[:middle_index]
         second_half = list[middle_index:]
