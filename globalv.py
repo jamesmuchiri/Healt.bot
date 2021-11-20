@@ -6,7 +6,7 @@ responded_C = False
 responded_A = False
 responded_I = False
 
-Confirmation= False
+Confirmation = False
 
 f_name = " "
 get_illness = " "
