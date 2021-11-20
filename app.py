@@ -387,6 +387,13 @@ def reply_whatsapp():
 
     elif 'see' in msg.lower():  
 
+        r1 = ("Whats your *Email address* ")
+        resp.body(r1)
+
+        globalv.Confirmation = True
+
+    elif globalv.Confirmation == True:
+
         db = mysql.connector.connect(
     
             host = "us-cdbr-east-04.cleardb.com",
@@ -397,9 +404,14 @@ def reply_whatsapp():
             port ="3306",
         ) 
 
+        email = request.form['Body']
+
+        globalv.get_email = email
+
         mycursor = db.cursor()
         mycursor.execute('''SELECT Name FROM Appointments WHERE Email = (%s)''', (globalv.get_email,))
-        records = mycursor.fetchall()
+        
+        records = mycursor.fetchone()
 
       
         print(records)
