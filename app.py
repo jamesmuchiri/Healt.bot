@@ -387,10 +387,21 @@ def reply_whatsapp():
 
     elif 'see' in msg.lower():  
 
+        db = mysql.connector.connect(
+    
+            host = "us-cdbr-east-04.cleardb.com",
+            user = "b810f749eee078",
+            passwd = "243faaf9",
+            database = "heroku_9ae07b29d1d8813",
+            autocommit = True,
+            port ="3306",
+        ) 
+
         r1 = ("Whats your *Email address* ")
         resp.body(r1)
 
         globalv.Confirmation = True
+
 
     elif globalv.Confirmation == True:
 
@@ -409,7 +420,7 @@ def reply_whatsapp():
         globalv.get_email = email
 
         mycursor = db.cursor()
-        mycursor.execute('''SELECT Name FROM Appointments WHERE Email = (%s)''', (globalv.get_email,))
+        mycursor.execute('''SELECT Date, Age FROM Appointments WHERE Email = (%s)''', (globalv.get_email,))
         
         records = mycursor.fetchone()
 
@@ -417,7 +428,7 @@ def reply_whatsapp():
         print(records)
     
         resp.body(str(records))
-        globalv.Confirmation = False
+        
 
 
 
