@@ -433,12 +433,15 @@ def reply_whatsapp():
         
         records = mycursor.fetchone()
 
-        
+        #reply=("Your appointment is on {} at {}:{}0 hrs ").format(globalv.date_V,globalv.time_h,globalv.time_m)
+        #resp.body(reply)
       
         print(*records,sep = ',')
-    
-        resp.body(str(records)[1:-1] )
+
+        target = {39:None, 91:None , 93:None} 
+        resp.body(str(records).translate(target) )
         
+
         
 
 
