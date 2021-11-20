@@ -434,12 +434,11 @@ def reply_whatsapp():
         records = mycursor.fetchone()
 
         
-       
-        p = print(*records,sep = ',')
-
-        print (p)
+      
+        print(*records,sep = ',')
     
-        resp.body(str(p))
+        resp.body(str(records)[1:-1] )
+        
         
 
 
