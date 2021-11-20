@@ -429,7 +429,7 @@ def reply_whatsapp():
         globalv.get_email = email
 
         mycursor = db.cursor()
-        mycursor.execute('''SELECT Date, Tome FROM Appointments WHERE Email = (%s)''', (globalv.get_email,))
+        mycursor.execute('''SELECT Date, Time FROM Appointments WHERE Email = (%s)''', (globalv.get_email,))
         
         records = mycursor.fetchone()
 
