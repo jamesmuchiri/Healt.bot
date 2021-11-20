@@ -186,6 +186,15 @@ def reply_whatsapp():
         globalv.responded_I = True
     
     elif globalv.responded_I == True or msg.lower() in appointmnet:
+        db = mysql.connector.connect(
+    
+            host = "us-cdbr-east-04.cleardb.com",
+            user = "b810f749eee078",
+            passwd = "243faaf9",
+            database = "heroku_9ae07b29d1d8813",
+            autocommit = True,
+            port ="3306",
+        ) 
 
         illness = request.form['Body']
 
@@ -424,10 +433,11 @@ def reply_whatsapp():
         
         records = mycursor.fetchone()
 
+        
       
-        print(records)
+        print(*records,sep = ',')
     
-        resp.body(str(records))
+        resp.body(str(records,sep = ','))
         
 
 
