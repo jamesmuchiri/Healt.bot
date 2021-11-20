@@ -404,7 +404,7 @@ def reply_whatsapp():
       
         print(records)
     
-        resp.body(str(records))
+        resp.body(w.write(str(records)))
         
 
 
