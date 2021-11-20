@@ -113,16 +113,6 @@ app = Flask(__name__)
 def reply_whatsapp():
 
 
-    db = mysql.connector.connect(
-    
-        host = "us-cdbr-east-04.cleardb.com",
-        user = "b810f749eee078",
-        passwd = "243faaf9",
-        database = "heroku_9ae07b29d1d8813",
-        autocommit = True,
-        port ="3306",
-    )
-
     others = ("others","other")
     greetings = ("hi","hey","hello","start")
     confirm_app = ("y","of cours","for sure","sure")
@@ -145,6 +135,13 @@ def reply_whatsapp():
 
     elif msg.lower() in greetings:
         
+        globalv.responded_E = False
+        globalv.responded_F = False
+        globalv.responded_D = False
+        globalv.responded_T = False
+        globalv.responded_C = False
+        globalv.responded_A = False
+        globalv.responded_I = False
         
         now = maya.MayaDT.from_datetime(datetime.utcnow())
         Time_zone = now.hour +3
@@ -204,7 +201,15 @@ def reply_whatsapp():
        
     elif globalv.responded_E == True:
 
-       
+        db = mysql.connector.connect(
+    
+            host = "us-cdbr-east-04.cleardb.com",
+            user = "b810f749eee078",
+            passwd = "243faaf9",
+            database = "heroku_9ae07b29d1d8813",
+            autocommit = True,
+            port ="3306",
+        )
 
         email = request.form['Body']
         if email.endswith('@gmail.com') or email.endswith('@outlook.com'):
@@ -335,6 +340,15 @@ def reply_whatsapp():
            
     elif globalv.responded_C == True:
 
+        db = mysql.connector.connect(
+    
+            host = "us-cdbr-east-04.cleardb.com",
+            user = "b810f749eee078",
+            passwd = "243faaf9",
+            database = "heroku_9ae07b29d1d8813",
+            autocommit = True,
+            port ="3306",
+        )
 
         confirm = request.form['Body']
         c = ("yes","confirm","y")
@@ -373,7 +387,15 @@ def reply_whatsapp():
 
     elif 'see' in msg.lower():  
 
-
+        db = mysql.connector.connect(
+    
+            host = "us-cdbr-east-04.cleardb.com",
+            user = "b810f749eee078",
+            passwd = "243faaf9",
+            database = "heroku_9ae07b29d1d8813",
+            autocommit = True,
+            port ="3306",
+        ) 
 
         mycursor = db.cursor()
         mycursor.execute('''SELECT Name FROM Appointments WHERE Email = (%s)''', (globalv.get_email,))
