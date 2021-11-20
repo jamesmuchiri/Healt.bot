@@ -437,7 +437,7 @@ def reply_whatsapp():
       
         print(*records,sep = ',')
     
-        resp.body(str(records,sep = ','))
+        resp.body(*records,sep = ',')
         
 
 
