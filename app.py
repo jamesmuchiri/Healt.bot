@@ -398,13 +398,13 @@ def reply_whatsapp():
         ) 
 
         mycursor = db.cursor()
-        mycursor.execute('''SELECT Name FROM Appointments WHERE Email = (%s)''', (globalv.get_email,))
+        mycursor.execute('''SELECT Name FROM Appointments WHERE Email = (%s)''', (globalv.get_email))
         records = mycursor.fetchall()
 
       
         print(records)
     
-        resp.body(w.write(str(records)))
+        resp.body(str(records))
         
 
 
