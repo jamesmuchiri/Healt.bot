@@ -382,11 +382,12 @@ def reply_whatsapp():
 
 
 
-    else:
+    elif globalv.responded_E == False and globalv.responded_F == False and globalv.responded_D == False  and globalv.responded_T == False and globalv.responded_C == False and globalv.responded_A == False and globalv.responded_I == False:
+
         reply = ("Take it easy on me, i am still learning."
                     "\nMosty ask questions related to *Healthcare* and i will give you an appropriate answer. Thanks")
         resp.body(reply)
-        resp.media('https://i.ibb.co/hs5YLXc/nn.png')
+        #resp.media('https://i.ibb.co/hs5YLXc/nn.png')
         
 
     return str(response)  
