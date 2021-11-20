@@ -398,7 +398,7 @@ def reply_whatsapp():
         ) 
 
         mycursor = db.cursor()
-        mycursor.execute('''SELECT Name FROM Appointments WHERE Email = (%s)''', (globalv.get_email))
+        mycursor.execute('''SELECT Name FROM Appointments WHERE Email = (%s)''', (globalv.get_email,))
         records = mycursor.fetchall()
 
       
