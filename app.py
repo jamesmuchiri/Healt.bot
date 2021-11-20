@@ -401,10 +401,10 @@ def reply_whatsapp():
         mycursor.execute('''SELECT Name FROM Appointments WHERE Email = (%s)''', (globalv.get_email,))
         records = mycursor.fetchall()
 
-        for record in records:
-            print(record)
-            resp.body(str(record))
-
+      
+        print(records)
+    
+        resp.body(str(records))
         
 
 
