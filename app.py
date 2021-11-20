@@ -441,9 +441,10 @@ def reply_whatsapp():
         target = {39:None, 91:None} 
         a =str(records).translate(target)
 
-        
+        print(a[:1])
+        print(a[1:])
 
-        resp.body(a)
+        resp.body(a[:1])
        
         
 
