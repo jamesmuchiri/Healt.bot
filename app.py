@@ -374,6 +374,7 @@ def reply_whatsapp():
     elif 'see' in msg.lower():  
 
 
+
         mycursor = db.cursor()
         mycursor.execute('''SELECT Name FROM Appointments WHERE Email = (%s)''', (globalv.get_email,))
         records = mycursor.fetchall()
@@ -382,8 +383,7 @@ def reply_whatsapp():
 
 
 
-    elif globalv.responded_E == False and globalv.responded_F == False and globalv.responded_D == False  and globalv.responded_T == False and globalv.responded_C == False and globalv.responded_A == False and globalv.responded_I == False:
-
+    else:
         reply = ("Take it easy on me, i am still learning."
                     "\nMosty ask questions related to *Healthcare* and i will give you an appropriate answer. Thanks")
         resp.body(reply)
