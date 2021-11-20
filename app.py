@@ -182,19 +182,21 @@ def reply_whatsapp():
         )
         resp.body(r1)
         response.message("First, What is the appointment about?")  
-        responded_I = True
+
+        globalv.responded_I = True
     
     elif globalv.responded_I == True or msg.lower() in appointmnet:
 
         illness = request.form['Body']
-        global get_illness
-        get_illness = illness
+
+        globalv.get_illness = illness
         
         r1 = ("Whats your *Email address*, just to check for any corresponding appointments")
         resp.body(r1)
         
-        globalv.responded_I = False
         globalv.responded_E = True
+        globalv.responded_I = False
+        
         
        
     elif globalv.responded_E == True:
@@ -212,14 +214,14 @@ def reply_whatsapp():
         email = request.form['Body']
         if email.endswith('@gmail.com') or email.endswith('@outlook.com'):
 
-            global get_email
-            get_email = email
+            
+            globalv.get_email = email
 
             mycursor = db.cursor()
-            mycursor.execute('''SELECT Email FROM Appointments WHERE Email = (%s)''', (get_email,))
+            mycursor.execute('''SELECT Email FROM Appointments WHERE Email = (%s)''', (globalv.get_email,))
             checkEmail = mycursor.fetchall()
 
-            if (get_email,) in checkEmail:
+            if (globalv.get_email,) in checkEmail:
                 email_exist = ("\nSorry,😕 The *email* you are trying to use has an *appointment*")
                 resp.body (email_exist)
                 response.message("\nKindly use another one. Thanks")
@@ -228,8 +230,8 @@ def reply_whatsapp():
                 
                 user_phone_number = request.values['From']
                 if user_phone_number.startswith('whatsapp'):
-                    global number
-                    number = user_phone_number.split(':')[1]
+                   
+                    globalv.number = user_phone_number.split(':')[1]
 
                 first_name = ("\nWhats your *full name*")
                 resp.body (first_name)
@@ -245,13 +247,13 @@ def reply_whatsapp():
             
     elif globalv.responded_F == True:
 
-        global f_name
-        f_name = request.form['Body']
+        
+        globalv.f_name = request.form['Body']
 
-        if not re.match("^[A-z][A-z|\.|\s]+$",f_name):
+        if not re.match("^[A-z][A-z|\.|\s]+$",globalv.f_name):
             reply_v = ("Please give a vallid name _*Example james muchiri*_")
             resp.body (reply_v)
-        elif len(f_name) <10:
+        elif len(globalv.f_name) <10:
             reply_v = ("Kindly give your full name!!")
             resp.body (reply_v)
         else:
@@ -264,11 +266,11 @@ def reply_whatsapp():
 
 
     elif globalv.responded_A == True:
-        global age
-        age = request.form['Body']
+       
+        globalv.age = request.form['Body']
 
         try:
-            val = int(age)
+            val = int(globalv.age)
             if val > 150 :
                 reply_v = ("The number is too large to be a vallid age.")
                 resp.body (reply_v)
@@ -278,8 +280,8 @@ def reply_whatsapp():
                 response.message("Please tell me the *date* you want to come in."
                         "\n_*Example: 24 jan, 2021*_")
 
-                responded_D = True
-                responded_A = False
+                globalv.responded_D = True
+                globalv.responded_A = False
                 
         except ValueError:
             reply_v = ("Please give a vallid age. I only accept numbers.")
@@ -298,8 +300,8 @@ def reply_whatsapp():
             resp.body(reply)
 
         else:
-            global date_V
-            date_V = tomorrow.date
+           
+            globalv.date_V = tomorrow.date
 
             reply = ("At what *time?*")
             resp.body(reply)
@@ -315,11 +317,9 @@ def reply_whatsapp():
             reply=("Appointmrnts are only between 8AM ad 6PM")
             resp.body(reply)
         else:
-            global time_h
-            global time_m
-
-            time_h = t.hour
-            time_m = t.minute
+          
+            globalv.time_h = t.hour
+            globalv.time_m = t.minute
 
             reply =("All right, we are set!"
                     "\n\nHey *{}*,"
@@ -328,7 +328,7 @@ def reply_whatsapp():
                     "\n *Date:*   {}"
                     "\n *Time:*   {}:{}0 hrs"
                     "\n *For:*     {}"
-                    "\n *Age:*     {}").format(f_name,f_name,date_V,time_h,time_m,get_illness,age)
+                    "\n *Age:*     {}").format(globalv.f_name,globalv.f_name,globalv.date_V,globalv.time_h,globalv.time_m,globalv.get_illness,globalv.age)
             
             resp.body(reply)
 
@@ -358,24 +358,24 @@ def reply_whatsapp():
         if confirm.lower() in c:
 
             mycursor = db.cursor()
-            mycursor.execute('''INSERT INTO Appointments (Email) VALUES (%s)''', (get_email,))
+            mycursor.execute('''INSERT INTO Appointments (Email) VALUES (%s)''', (globalv.get_email,))
             db.rollback()
 
             mycursor = db.cursor()
-            mycursor.execute('''UPDATE Appointments SET Number= (%s),Illnes = (%s),Name= (%s) WHERE Email = (%s)''', (number,get_illness,f_name,get_email))
-            mycursor.execute('''UPDATE Appointments SET Age=(%s), Date= (%s),Time = (%s) WHERE Email = (%s)''', (age,date_V,time_h,get_email))
+            mycursor.execute('''UPDATE Appointments SET Number= (%s),Illnes = (%s),Name= (%s) WHERE Email = (%s)''', (globalv.number,globalv.get_illness,globalv.f_name,globalv.get_email))
+            mycursor.execute('''UPDATE Appointments SET Age=(%s), Date= (%s),Time = (%s) WHERE Email = (%s)''', (globalv.age,globalv.date_V,globalv.time_h,globalv.get_email))
             db.commit()
 
-            reply=("Your appointment on {} at {}:{}0 hrs has been scheduled successfully").format(date_V,time_h,time_m)
+            reply=("Your appointment on {} at {}:{}0 hrs has been scheduled successfully").format(globalv.date_V,globalv.time_h,globalv.time_m)
             resp.body(reply)
 
-            responded_C = False
+            globalv.responded_C = False
 
         elif confirm.lower() in disagree:
             reply = ("No appointment was booked"
                     "\nThanks for the time 🤗🤗")
             resp.body(reply)
-            responded_C = False
+            globalv.responded_C = False
 
         else:
             reply = ("You can reply with *yes* to confirm or *no* to disagree")
@@ -398,7 +398,7 @@ def reply_whatsapp():
         ) 
 
         mycursor = db.cursor()
-        mycursor.execute('''SELECT Name FROM Appointments WHERE Email = (%s)''', (get_email,))
+        mycursor.execute('''SELECT Name FROM Appointments WHERE Email = (%s)''', (globalv.get_email,))
         records = mycursor.fetchall()
         for record in records:
             print(record)
@@ -423,8 +423,6 @@ if __name__ == "__main__":
 
     model.load("model.tflearn")
     app.run(debug=True)
-
-
 
 
 
