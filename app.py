@@ -429,7 +429,7 @@ def reply_whatsapp():
         globalv.get_email = email
 
         mycursor = db.cursor()
-        mycursor.execute('''SELECT Date, Age FROM Appointments WHERE Email = (%s)''', (globalv.get_email,))
+        mycursor.execute('''SELECT Date, Tome FROM Appointments WHERE Email = (%s)''', (globalv.get_email,))
         
         records = mycursor.fetchone()
 
@@ -438,8 +438,21 @@ def reply_whatsapp():
       
         print(*records,sep = ',')
 
-        target = {39:None, 91:None} 
-        resp.body(str(records).translate(target) )
+        target = {39:None, 91:None , 93:None} 
+        a =str(records).translate(target)
+
+        length = len(a)
+
+        middle_index = length // 2
+
+        first_half = list[:middle_index]
+        second_half = list[middle_index:]
+
+        print(first_half)
+        print(second_half)
+
+        resp.body(first_half)
+        resp.body(second_half)
         
 
         
