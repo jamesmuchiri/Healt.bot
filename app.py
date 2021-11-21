@@ -395,7 +395,7 @@ def reply_whatsapp():
             
 
 
-    elif Conf in msg.lower():  
+    elif msg.lower() in Conf:  
 
         db = mysql.connector.connect(
     
