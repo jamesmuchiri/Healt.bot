@@ -435,7 +435,7 @@ def reply_whatsapp():
         records = mycursor.fetchone()
 
         
-        if any(field is None for field in records):
+        if records is None:
             print(records)
             reply=("There is *NO* appointment by this email  _{}_ ").format(globalv.get_email)
             resp.body(reply)
