@@ -117,6 +117,7 @@ def reply_whatsapp():
     greetings = ("hi","hey","hello","start")
     confirm_app = ("y","of cours","for sure","sure")
     appointmnet = ("dental","asthma","allergies","cancer","surgery","diabetes","arthritis")
+    Conf = ("when is my appointment due ","when is my appointment","when","when am i appointment","due","when is my visit","visit")
     
     msg = request.form.get('Body','').lower() 
     response = MessagingResponse()
@@ -394,7 +395,7 @@ def reply_whatsapp():
             
 
 
-    elif 'see' in msg.lower():  
+    elif Conf in msg.lower():  
 
         db = mysql.connector.connect(
     
@@ -440,7 +441,7 @@ def reply_whatsapp():
         time = a[1:3]
         date = a[5:15]
 
-        reply=("Your appointment is on _*{}*_ at _*{}:{} hrs*_ ").format(date,time,"00")
+        reply=("Your appointment is on _{}_ at _{}:{} hrs_ ").format(date,time,"00")
         resp.body(reply)
        
        
