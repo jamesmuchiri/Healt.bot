@@ -429,24 +429,20 @@ def reply_whatsapp():
         globalv.get_email = email
 
         mycursor = db.cursor()
-        mycursor.execute('''SELECT Time, Date FROM Appointments WHERE Email = (%s)''', (globalv.get_email,))
-        
+        mycursor.execute('''SELECT Time, Date FROM Appointments WHERE Email = (%s)''', (globalv.get_email,)) 
         records = mycursor.fetchone()
 
-        #reply=("Your appointment is on {} at {}:{}0 hrs ").format(globalv.date_V,globalv.time_h,globalv.time_m)
-        #resp.body(reply)
-      
         print(*records,sep = ',')
 
         target = {39:None, 91:None} 
         a =str(records).translate(target)
 
-        print(a[1:3])
-        print(a[5:14])
+        time = a[1:3]
+        date = a[5:14]
 
-        
-        resp.body(a[1:3])
-        resp.body(a[5:14])
+        reply=("Your appointment is on {} at {}:{} hrs ").format(date,time,"00")
+        resp.body(reply)
+       
        
         
 
