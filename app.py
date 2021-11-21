@@ -438,9 +438,9 @@ def reply_whatsapp():
         a =str(records).translate(target)
 
         time = a[1:3]
-        date = a[5:14]
+        date = a[5:15]
 
-        reply=("Your appointment is on {} at {}:{} hrs ").format(date,time,"00")
+        reply=("Your appointment is on _*{}*_ at _*{}:{} hrs*_ ").format(date,time,"00")
         resp.body(reply)
        
        
