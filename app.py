@@ -427,35 +427,39 @@ def reply_whatsapp():
         ) 
 
         email = request.form['Body']
+        if email.endswith('@gmail.com') or email.endswith('@outlook.com'):
+            globalv.get_email = email
 
-        globalv.get_email = email
 
+            mycursor = db.cursor()
+            mycursor.execute('''SELECT Time, Date FROM Appointments WHERE Email = (%s)''', (globalv.get_email,)) 
+            records = mycursor.fetchone()
 
-        mycursor = db.cursor()
-        mycursor.execute('''SELECT Time, Date FROM Appointments WHERE Email = (%s)''', (globalv.get_email,)) 
-        records = mycursor.fetchone()
+            
+            if records is None:
+                print(records)
+                reply=("There is *NO* appointment by this email  _{}_ ").format(globalv.get_email)
+                resp.body(reply)
+                
+            else:
+
+                #print(*records,sep = ',')
+                target = {39:None, 91:None} 
+                a =str(records).translate(target)
+
+                time = a[1:3]
+                date = a[5:15]
+
+                reply=("Your appointment is on _{}_ at _{}:{} hrs_ ").format(date,time,"00")
+                resp.body(reply)
+
+                globalv.Confirmation =False
+        else:
+            reply_VE=("Please give a valid Email address "
+                "\n_*Example: matenzawa@gmail.com*_")
+            resp.body(reply_VE)
 
         
-        if records is None:
-            print(records)
-            reply=("There is *NO* appointment by this email  _{}_ ").format(globalv.get_email)
-            resp.body(reply)
-            
-        else:
-
-            #print(*records,sep = ',')
-            target = {39:None, 91:None} 
-            a =str(records).translate(target)
-
-            time = a[1:3]
-            date = a[5:15]
-
-            reply=("Your appointment is on _{}_ at _{}:{} hrs_ ").format(date,time,"00")
-            resp.body(reply)
-
-            globalv.Confirmation =False
-
-       
        
         
 
