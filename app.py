@@ -143,6 +143,7 @@ def reply_whatsapp():
         globalv.responded_C = False
         globalv.responded_A = False
         globalv.responded_I = False
+        globalv.Confirmation =False
         
         now = maya.MayaDT.from_datetime(datetime.utcnow())
         Time_zone = now.hour +3
@@ -451,6 +452,8 @@ def reply_whatsapp():
 
             reply=("Your appointment is on _{}_ at _{}:{} hrs_ ").format(date,time,"00")
             resp.body(reply)
+
+            globalv.Confirmation =False
 
        
        
