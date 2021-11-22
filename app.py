@@ -111,7 +111,15 @@ app = Flask(__name__)
 
 
 def reply_whatsapp():
-
+    db = mysql.connector.connect(
+    
+        host = "us-cdbr-east-04.cleardb.com",
+        user = "b810f749eee078",
+        passwd = "243faaf9",
+        database = "heroku_9ae07b29d1d8813",
+        autocommit = True,
+        port ="3306",
+    )
 
     others = ("others","other")
     greetings = ("hi","hey","hello","start")
@@ -184,6 +192,15 @@ def reply_whatsapp():
         )
         resp.body(r1)
         response.message("First, What is the appointment about?")  
+        db = mysql.connector.connect(
+    
+            host = "us-cdbr-east-04.cleardb.com",
+            user = "b810f749eee078",
+            passwd = "243faaf9",
+            database = "heroku_9ae07b29d1d8813",
+            autocommit = True,
+            port ="3306",
+        ) 
 
         globalv.responded_I = True
     
@@ -480,7 +497,7 @@ def reply_whatsapp():
 
 
     else:
-        reply = ("Take it easy on me, i am still learning."
+        reply = ("Take it easy on me 😕😕, i am still learning."
                     "\nMosty ask questions related to *Healthcare* and i will give you an appropriate answer. Thanks")
         resp.body(reply)
         #resp.media('https://i.ibb.co/hs5YLXc/nn.png')
