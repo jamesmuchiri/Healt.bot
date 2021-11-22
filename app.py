@@ -233,9 +233,21 @@ def reply_whatsapp():
             checkEmail = mycursor.fetchall()
 
             if (globalv.get_email,) in checkEmail:
-                email_exist = ("\nSorry,😕 The *email* you are trying to use has an *appointment*")
+
+                mycursor = db.cursor()
+                mycursor.execute('''SELECT Time, Date FROM Appointments WHERE Email = (%s)''', (globalv.get_email,)) 
+                records = mycursor.fetchone()
+
+                target = {39:None, 91:None} 
+                a =str(records).translate(target)
+
+                time = a[1:3]
+                date = a[5:15]
+
+                email_exist = ("\nSorry,😕 The *Email* you are trying to use has a sheduled *appointment*")
                 resp.body (email_exist)
-                response.message("\nKindly use another one. Thanks")
+
+                response.message("\nThe appointment is on _{}_ at _{}:{} hrs_ ").format(date,time,"00")
 
             else:
                 
