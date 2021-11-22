@@ -244,10 +244,10 @@ def reply_whatsapp():
                 time = a[1:3]
                 date = a[5:15]
 
-                email_exist = ("\nSorry,😕 The *Email* you are trying to use has a sheduled *appointment*")
+                email_exist = ("\nSorry,😕\nThe *Email* you are trying to use has a sheduled *appointment* which is scheduled on _*{}*_ at _*{}:{} hrs*_ ").format(date,time,"00")
                 resp.body (email_exist)
 
-                response.message("\nThe appointment is on _{}_ at _{}:{} hrs_ ").format(date,time,"00")
+                
 
             else:
                 
